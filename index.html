@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Birthday Wish Generator</title>
+  <style>
+    body {
+      background-color: #fff0f6;
+      font-family: 'Comic Sans MS', cursive;
+      text-align: center;
+      padding: 40px;
+      overflow: hidden;
+    }
+
+    h1 {
+      color: #d63384;
+      font-size: 36px;
+      margin-bottom: 20px;
+    }
+
+    input, textarea {
+      padding: 10px;
+      font-size: 16px;
+      width: 250px;
+      border: 2px solid #ff6ec7;
+      border-radius: 10px;
+      margin: 10px;
+    }
+
+    button {
+      background-color: #ff69b4;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background-color: #e75480;
+    }
+
+    .card {
+      background-color: #fff;
+      border: 3px dashed #ff85c1;
+      padding: 20px;
+      margin-top: 30px;
+      width: 300px;
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 20px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+
+    #confetti {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background-color: #ff69b4;
+      animation: fall 4s infinite;
+      opacity: 0.7;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(0) rotate(0); }
+      100% { transform: translateY(100vh) rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🎂 Birthday Wish Generator 🎉</h1>
+
+  <input type="text" id="nameInput" placeholder="Your Name"><br>
+  <textarea id="wishInput" placeholder="Your birthday wish..."></textarea><br>
+  <button onclick="generateCard()">Generate Wish</button>
+
+  <div class="card" id="wishCard" style="display: none;">
+    <h2 id="wishName"></h2>
+    <p id="wishMessage"></p>
+  </div>
+
+  <div id="confetti"></div>
+
+  <script>
+    function generateCard() {
+      const name = document.getElementById('nameInput').value.trim();
+      const wish = document.getElementById('wishInput').value.trim();
+      const card = document.getElementById('wishCard');
+      const wishName = document.getElementById('wishName');
+      const wishMessage = document.getElementById('wishMessage');
+
+      if (name === '' || wish === '') {
+        alert("Please enter both your name and wish.");
+        return;
+      }
+
+      wishName.innerText = `🎉 Happy Birthday, ${name}!`;
+      wishMessage.innerText = wish;
+      card.style.display = 'block';
+
+      // Create confetti
+      const confettiContainer = document.getElementById('confetti');
+      confettiContainer.innerHTML = ''; // clear previous confetti
+      for (let i = 0; i < 50; i++) {
+        const confetti = document.createElement('div');
+        confetti.classList.add('confetti');
+        confetti.style.left = `${Math.random() * 100}%`;
+        confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 70%)`;
+        confetti.style.animationDuration = `${Math.random() * 3 + 2}s`;
+        confettiContainer.appendChild(confetti);
+      }
+    }
+  </script>
+
+</body>
+</html>
